@@ -1,0 +1,102 @@
+import java.util.Scanner; // imports scanner
+public class TDEE
+{
+    public static void main(String args []) {
+       
+       // Initializes Scanner, Strings, booleans, doubles
+       Scanner in = new Scanner(System.in);
+       
+       String firstName;
+       String lastName;
+       String firstInitial;
+       String secondInitial;
+       String fullName;
+       String BMR;
+       String Gender;
+       String A = "[A] Resting (Sleeping, Reclining)";
+       String B = "[B] Sedentary (Minimal Movement)";
+       String C = "[C] Light (Sitting, Standing)";
+       String D = "[D] Moderate (Light Manual Labor, Dancing, Riding Bike)";
+       String E = "[E] Very Active (Team Sports, Hard Manual Labor)";
+       String F = "[F] Extremely Active (Full-time Athlete, Heavy Manual Labor)";
+       String activityLevel;
+       
+       boolean isFemale = false;
+       boolean incorrectChoice = false;
+       
+       double activityFactor = 1.0;
+       double TDEE;
+       
+       // Asks user for name
+       System.out.print("Please enter your name: ");
+       firstName = in.next();
+       lastName = in.next();
+       firstInitial = firstName.substring(0,1).toUpperCase(); // takes first letter of first name and capitalizes it
+       secondInitial = lastName.substring(0,1).toUpperCase(); // takes first letter of last name and capitalizes it
+       fullName = firstInitial + firstName.substring(1) + " " + secondInitial + lastName.substring(1); // combines the capitalized initials to the rest of the name
+                                                                                                       // done in case user types name in lower case
+       
+       // Asks for BMR
+       System.out.print("Please enter your BMR: ");
+       BMR = in.next();
+       int bmr = Integer.parseInt(BMR); // saves value as an int
+       
+       // Asks for gender
+       System.out.print("Please enter your gender (M/F): ");
+       Gender = in.next().substring(0,1); // saves only first letter as a string
+       if (Gender.compareToIgnoreCase("F") == 0) { // if first leter of what the user typed is F or f
+           isFemale = true; // this boolean becomes true, will affect the ativity factor later on
+        }
+       
+       // Displays menu  
+       System.out.print("\nSelect Your Activity Level"+"\n"+A+"\n"+B+"\n"+C+"\n"+D+"\n"+E+"\n"+F);
+       
+       // Asks user to enter in an option
+       System.out.print("\n\nEnter the letter corresponding to you activity level: ");
+       activityLevel = in.next().substring(0,1); // only first leter of what the user enters is saved
+       
+       // if the first letter does not equal one of the options
+       if (!(activityLevel.compareToIgnoreCase("A") == 0  || activityLevel.compareToIgnoreCase("B") == 0 || activityLevel.compareToIgnoreCase("C") == 0 || activityLevel.compareToIgnoreCase("D") == 0 || activityLevel.compareToIgnoreCase("E") == 0 || activityLevel.compareToIgnoreCase("F") == 0)){
+           System.out.println("You entered an incorrect option"); // tells the user an incorrect choice was made
+           incorrectChoice = true; // this boolean turn to true, will stop code from continuing down below
+    }  else { // otherwise (aka user input matches a choice)
+        if (isFemale) { // if the person if female
+            if (activityLevel.compareToIgnoreCase("A") == 0) { // if the input matches one of the options
+                activityFactor = 1.0; // the activity factor is set to the corresponding value for that option
+            } else if (activityLevel.compareToIgnoreCase("B") == 0) {
+                activityFactor = 1.3;
+            } else if (activityLevel.compareToIgnoreCase("C") == 0) {
+                activityFactor = 1.5;
+            } else if (activityLevel.compareToIgnoreCase("D") == 0) {
+                activityFactor = 1.6;
+            } else if (activityLevel.substring(0,1).compareToIgnoreCase("E") == 0) {
+                activityFactor = 1.9;
+            } else activityFactor = 2.2; // otherwise the activity factor is set to 2.2, since the only other option would be for the input to be choice "f"
+        } else if (activityLevel.compareToIgnoreCase("A") == 0) { // otherwise (aka correct choice entered and not female), same code runs, but #s adjusted for males
+                activityFactor = 1.0;
+            } else if (activityLevel.compareToIgnoreCase("B") == 0) {
+                activityFactor = 1.3;
+            } else if (activityLevel.compareToIgnoreCase("C") == 0) {
+                activityFactor = 1.6;
+            } else if (activityLevel.compareToIgnoreCase("D") == 0) {
+                activityFactor = 1.7;
+            } else if (activityLevel.substring(0,1).compareToIgnoreCase("E") == 0) {
+                activityFactor = 2.1;
+            } else activityFactor = 2.4;
+    }
+    
+    if (!incorrectChoice) { // if a correct choice was made, the following runs
+    TDEE = ((10 * bmr * activityFactor) / 10); // calculates TDEE, rounds it to the first decmial place
+    
+    // Displays results
+    System.out.print("\n\n\nYour results: ");
+    System.out.print("\n Name: " + fullName);
+    System.out.print("               Gender: " + Gender.substring(0,1).toUpperCase());
+    System.out.print("\n BMR: " + (double)bmr + " calories"); // displays BMR as a double because that's how the example displayed it
+    System.out.print("          Activity Factor: " + activityFactor);
+    System.out.print("\n TDEE: " + TDEE +  " calories");
+    System.out.println("");
+}
+}
+}
+            
