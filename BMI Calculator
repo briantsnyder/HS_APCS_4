@@ -1,0 +1,56 @@
+import java.util.Scanner; // imports scanner
+public class BMI
+{
+    public static void main(String [] args)
+    {
+        Scanner in = new Scanner(System.in); // initializes scanner
+
+        // Gather Input
+        System.out.print("Enter your name (first last): "); // asks for first and last name
+        String name = in.next();
+        name += in.nextLine();
+
+        System.out.print("Enter your weight in pounds (e.g. 175): "); // asks for weight
+        String weightPoundsString = in.next();
+        
+        System.out.print("Enter in your height in feet and inches (e.g. 5 11): "); // asks for height
+        String heightFeetString = in.next(); // feet
+        String heightInchesString = in.next(); // inches
+
+        // Parse numeric input
+        int heightFt = Integer.parseInt(heightFeetString); // converts feet string to int
+        int heightIn = Integer.parseInt(heightInchesString); // converts inches string to int
+        int weightLbs = Integer.parseInt(weightPoundsString); // converts weight string to int
+
+        // Convert height and weight
+        double heightMeters = ((heightIn + (heightFt * 12)) * 0.0254); // converts height to meters
+        double weightKg = 0.45359237 * weightLbs; // converts pounds to kilograms
+
+        // Calculates BMI
+        double BMI = (weightKg / (heightMeters * heightMeters));
+        
+        // Determines category
+        String category = "Obese"; // Depending on what range the BMI fals under, the category is determined, Obese is default which is reched if BMI >= 30
+        if (BMI < 18.5) {
+            category = "Underweight"; 
+        }
+            else if (BMI >= 18.5 && BMI <= 24.9) {
+                category = "Normal or Healthy Weight"; 
+            }
+                else if (BMI >= 25.0 && BMI <= 29.9) {
+                    category = "Overweight"; 
+                }
+
+
+        // Displays results
+        System.out.println("\n\n");
+        System.out.println("Body Mass Index Calculator");
+        System.out.println("============================");
+        System.out.println("Name: " + name);
+        System.out.println("Height (m): " + ((int)(heightMeters * 100.0) / 100.0)); // displays height rounded to the second decimal place
+        System.out.println("Weight (kg): " + ((int)(weightKg * 100.0) / 100.0)); // displays weight rounded to the second decimal place
+        System.out.println("BMI: " + ((int)(BMI * 100.0) / 100.0)); // displays BMI rounded to the second decimal place
+        System.out.println("Category: " + category);
+
+    }
+}
